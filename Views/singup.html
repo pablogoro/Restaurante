@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <!-- FONTAWESOME -->
+  <script src="https://kit.fontawesome.com/20fb0bfa14.js" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./js/script.js"></script>
+
+</head>
+<body class="body2">
+
+<form id="signup" action="../Controller/singupcontroller.php" method="POST" class="form login">
+
+  <div class="form__field">
+    <label for="login__name"><svg class="icon">
+      <use xlink:href="#icon-user"></use>
+    </svg><span class="hidden">Nombre</span></label>
+    <input autocomplete="username" id="login__name" type="text" name="nombre" class="form__input" placeholder="Nombre" required>
+  </div>
+
+  <div class="form__field">
+    <label for="login__surname"><svg class="icon">
+      <use xlink:href="#icon-user"></use>
+    </svg><span class="hidden">Apellido</span></label>
+    <input autocomplete="username" id="login__surname" type="text" name="apellido" class="form__input" placeholder="Apellido" required>
+  </div>
+  <div class="form__field">
+    <label for="login__dni"><svg class="icon">
+      <use xlink:href="#icon-user"></use>
+    </svg><span class="hidden">DNI</span></label>
+    <input autocomplete="username" id="login__dni" type="text" name="dni" class="form__input" placeholder="DNI" required>
+  </div>
+  <div class="form__field">
+    <label for="login__password"><svg class="icon">
+      <use xlink:href="#icon-lock"></use>
+    </svg><span class="hidden">Telf</span></label>
+    <input id="telf" type="text" name="telf" class="form__input" placeholder="Telf" required>
+  </div>
+  <div class="form__field">
+    <label for="login__password"><svg class="icon">
+      <use xlink:href="#icon-lock"></use>
+    </svg><span class="hidden">Email</span></label>
+    <input id="email" type="text" name="email" class="form__input" placeholder="Email" required>
+  </div>
+
+  <div class="form__field">
+    <label for="login__password"><svg class="icon">
+      <use xlink:href="#icon-lock"></use>
+    </svg><span class="hidden">Password</span></label>
+    <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+  </div>
+  <div class="form__field">
+    <label for="login__password"><svg class="icon">
+      <use xlink:href="#icon-lock"></use>
+    </svg><span class="hidden">Conf Password</span></label>
+    <input id="login_confirm_password" type="password" name="conf_password" class="form__input" placeholder="Confirm Password" required>
+  </div>
+
+  <input type="hidden" value=" " id="fantasma">
+
+  <div class="form__field">
+    <input type="submit" id="submit" value="Sign Up">
+  </div>
+
+</form>
+<p class="text--center">Already a member? <a href="../index.html">Log in now</a> <svg class="icon">
+  <use xlink:href="#icon-arrow-right"></use>
+</svg></p>
+
+</body>
+</html>
