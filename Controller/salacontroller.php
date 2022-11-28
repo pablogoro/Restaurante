@@ -10,7 +10,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol']=='cam') {
             echo "<div class='mesas'>";
 
 
-            echo "<img src='./img/4disponible.png' class='libre'>";
+            echo "<img src='./img/4disponible.png' class='libre' onclick='reserva({$mesa['Id_mesa']})'>";
             echo "<p class='flex'>MESA: $mesa[Id_mesa]</p>";
             echo "</div>";
         }
@@ -29,7 +29,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol']=='cam') {
             array_push($reservadas,$mesa['Id_mesa']);
 
             echo "<div class='mesas'>";
-            echo "<img src='./img/4ocupado.png' class='ocupada'>";
+            echo "<img src='./img/4ocupado.png' class='ocupada' onclick='reserva({$mesa['Id_mesa']})'>";
             echo "<p class='flex'>MESA: $mesa[Id_mesa]</p>";
             echo "</div>";
         }
@@ -37,7 +37,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol']=='cam') {
             if (!in_array($mesa['Id_mesa'],$reservadas)){
 
                 echo "<div class='mesas'>";
-                echo "<img src='./img/4disponible.png' class='libre'>";
+                echo "<img src='./img/4disponible.png' class='libre' onclick='reserva({$mesa['Id_mesa']})'>";
                 echo "<p class='flex'>MESA: $mesa[Id_mesa]</p>";
                 echo "</div>";
             }
@@ -55,7 +55,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol']=='cam') {
             echo "<div class='mesas2'>";
 
 
-            echo "<img src='./img/4disponible.png' class='libre'>";
+            echo "<img src='./img/4disponible.png' class='libre' onclick='reserva({$mesa['Id_mesa']})'>";
             echo "<p class='flex'>MESA: $mesa[Id_mesa]</p>";
             echo "</div>";
         }
@@ -74,7 +74,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol']=='cam') {
             array_push($reservadas,$mesa['Id_mesa']);
 
             echo "<div class='mesas2'>";
-            echo "<img src='./img/4ocupado.png' class='ocupada'>";
+            echo "<img src='./img/4ocupado.png' class='ocupada' onclick='reserva({$mesa['Id_mesa']})'>";
             echo "<p class='flex'>MESA: $mesa[Id_mesa]</p>";
             echo "</div>";
         }
@@ -82,7 +82,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol']=='cam') {
             if (!in_array($mesa['Id_mesa'],$reservadas)){
 
                 echo "<div class='mesas2'>";
-                echo "<img src='./img/4disponible.png' class='libre'>";
+                echo "<img src='./img/4disponible.png' class='libre' onclick='reserva({$mesa['Id_mesa']})'>";
                 echo "<p class='flex'>MESA: $mesa[Id_mesa]</p>";
                 echo "</div>";
             }

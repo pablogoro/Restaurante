@@ -53,7 +53,7 @@
             </div>
         </form>
 
-        <div class="info-box">infooo</div>
+        <div class="info-box" id="info-box">infooo</div>
     </div>
     <div class="rigth">
         <div class="contenedor " id="contenedor">

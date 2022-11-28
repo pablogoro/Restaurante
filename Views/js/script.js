@@ -66,94 +66,28 @@ window.addEventListener("load", (event) => {
 
     if (select){
         select.addEventListener('change', function (ev){
-            const sala= select.value
-            const dia=date.value
-            const tiempo= time.value
-            const formdata = new FormData();
-            formdata.append('id',sala);
-            formdata.append('dia',dia);
-            formdata.append('tiempo',tiempo);
-            const ajax = new XMLHttpRequest();
-            ajax.open("POST","../Controller/salacontroller.php");
-            ajax.onload = function(){
-                if(ajax.status === 200){
-                   document.getElementById('contenedor').innerHTML= ajax.responseText
-
-                }
-            };
-            ajax.send(formdata);
-
+          sala(select,date,time)
 
         })
     }
     if (date){
         date.addEventListener('change',function (ev){
-            const sala= select.value
-            const dia=date.value
-            const tiempo= time.value
-            const formdata = new FormData();
-            formdata.append('id',sala);
-            formdata.append('dia',dia);
-            formdata.append('tiempo',tiempo);
-            const ajax = new XMLHttpRequest();
-            ajax.open("POST","../Controller/salacontroller.php");
-            ajax.onload = function(){
-                if(ajax.status === 200){
-                    document.getElementById('contenedor').innerHTML= ajax.responseText
-
-                }
-            };
-            ajax.send(formdata);
+            sala(select,date,time)
 
 
         })
     }
     if (time){
         time.addEventListener('change',function (ev){
-            const sala= select.value
-            const dia=date.value
-            const tiempo= time.value
-            const formdata = new FormData();
-            formdata.append('id',sala);
-            formdata.append('dia',dia);
-            formdata.append('tiempo',tiempo);
-
-            const ajax = new XMLHttpRequest();
-            ajax.open("POST","../Controller/salacontroller.php");
-            ajax.onload = function(){
-                if(ajax.status === 200){
-                    document.getElementById('contenedor').innerHTML= ajax.responseText
-
-                }
-            };
-            ajax.send(formdata);
+            sala(select,date,time)
 
 
         })
     }
 
 
-    const libres= document.getElementsByClassName('libre')
 
-    for (let i=0; i<libres.length; i++){
-        libres[i].addEventListener('click', reserva)
-    }
-    function reserva(){
-        alert('si')
-    }
 
-    var element= document.getElementById('contenedor')
-    element.addEventListener('change', function (e){
-
-        const libres= element.getElementsByClassName('libre')
-
-        for (let i=0; i<libres.length; i++){
-            libres[i].addEventListener('click', reserva)
-        }
-        function reserva(){
-            alert('si')
-        }
-    })
 
 
     document.getElementById('logOut').addEventListener('click', function (){
@@ -182,5 +116,41 @@ window.addEventListener("load", (event) => {
 
 
 })
+
+
+function reserva(id){
+    const formdata = new FormData();
+    formdata.append('id',id);
+    const ajax = new XMLHttpRequest();
+    ajax.open("POST","../Controller/mesacontroller.php");
+    ajax.onload = function(){
+        if(ajax.status === 200){
+
+            document.getElementById('info-box').innerHTML= ajax.responseText
+
+        }
+    };
+    ajax.send(formdata);
+}
+function sala(select,date,time){
+    const sala= select.value
+    const dia=date.value
+    const tiempo= time.value
+    const formdata = new FormData();
+    formdata.append('id',sala);
+    formdata.append('dia',dia);
+    formdata.append('tiempo',tiempo);
+    const ajax = new XMLHttpRequest();
+    ajax.open("POST","../Controller/salacontroller.php");
+    ajax.onload = function(){
+        if(ajax.status === 200){
+
+            document.getElementById('contenedor').innerHTML= ajax.responseText
+
+        }
+    };
+    ajax.send(formdata);
+
+}
 
 
