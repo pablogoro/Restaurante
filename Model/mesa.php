@@ -97,16 +97,32 @@ class Mesa{
     // public function cambiarEstadoMesa(){
 
     // }
+    public static function getAll($filtro){
+        require_once "../Controller/conexion.php";
+        $filtro=$pdo->quote($filtro);
+        $filtro=str_replace('\'','',$filtro);
+        $stmt=$pdo->prepare("SELECT * FROM `tbl_mesa` INNER JOIN tbl_sala on tbl_sala.Id_sala=tbl_mesa.Sala WHERE Id_mesa LIKE '%".$filtro."%' OR capacidad_mesa LIKE '%".$filtro."%' OR Estado LIKE '%".$filtro."%' OR tbl_sala.nombre_sala LIKE '%".$filtro."%'");
+        $stmt->execute();
 
+        return $stmt;
+    }
     public static function getAllBySalaId (int $id, $dia, $hora ){
         require "../controller/conexion.php";
         $idB= $pdo->quote($id);
         $idS=str_replace('\'','',$idB);
         $diaB= $pdo->quote($dia);
-        $horaB= $pdo->quote($hora);
-        $horaS=str_replace('\'','',$horaB);
-        $min=explode(":",$horaS);
+        if ($hora=="-"){
+            $horaB=date("h:i:s");
+        }else{
+            $horaB= $pdo->quote($hora);
 
+        }
+
+        $horaS=str_replace('\'','',$horaB);
+
+        $horaS=str_replace('\"','',$horaS);
+
+        $min=explode(":",$horaS);
         $min[1]= $min[0]*60 + $min[1];
         $horaAtras=$min[1]-60;
 
@@ -157,6 +173,24 @@ class Mesa{
         }
 
 
+    }
+    public function delete(int $id)
+    {
+        require "../Controller/conexion.php";
+        $stmt=$pdo->prepare("DELETE FROM `tbl_mesa` WHERE Id_mesa=?");
+        $stmt -> bindParam(1,$id);
+        $stmt->execute();
+
+
+    }
+    public static function getById($id){
+        require_once "../Controller/conexion.php";
+        $stmt=$pdo->prepare("SELECT m.Id_mesa as Id_mesa, m.capacidad_mesa as capacidad , m.Estado as estado,s.nombre_sala as sala FROM `tbl_mesa` m INNER JOIN tbl_sala s on s.Id_sala=m.Sala  WHERE Id_mesa = $id ");
+        $stmt->execute();
+        $stmt=$stmt->fetch(PDO::FETCH_ASSOC);
+
+
+        echo json_encode($stmt) ;
     }
 
 public static function updateEstado (int $sala, int $id, string $est, int $ocu, int $id_cam){
@@ -231,5 +265,42 @@ public static function updateEstado (int $sala, int $id, string $est, int $ocu, 
         }
 
 
+}
+
+public static function update(int $id,$cap,$estado,$sala){
+
+    require "../Controller/conexion.php";
+    $id=$pdo->quote($id);
+    $cap=$pdo->quote($cap);
+    $estado=$pdo->quote($estado);
+    $sala=$pdo->quote($sala);
+    $id=str_replace('\'','',$id);
+    $cap=str_replace('\'','',$cap);
+    $estado=str_replace('\'','',$estado);
+    $sala=str_replace('\'','',$sala);
+    $sql="UPDATE `tbl_mesa` SET `capacidad_mesa`=?,`Estado`=?,`Sala`=? WHERE Id_mesa=?  ";
+    $stmt=$pdo->prepare($sql);
+    $stmt -> bindparam( 1,$cap);
+    $stmt -> bindparam( 2,$estado);
+    $stmt -> bindparam( 3,$sala);
+    $stmt -> bindparam( 4,$id);
+    $stmt->execute();
+    return $stmt;
+}
+
+public function create($cap,$sala,$img){
+
+    require "../Controller/conexion.php";
+
+    $cap=$pdo->quote($cap);
+    $sala=$pdo->quote($sala);
+    $sala=str_replace('\'','',$sala);
+    $sql="INSERT INTO `tbl_mesa`(`Id_mesa`, `capacidad_mesa`, `img`, `Estado`, `Sala`) VALUES (null,?,?,'ok',?)  ";
+    $stmt=$pdo->prepare($sql);
+    $stmt -> bindparam( 1,$cap);
+    $stmt -> bindparam( 2,$img);
+    $stmt -> bindparam( 3,$sala);
+    $stmt->execute();
+    return $stmt;
 }
 }

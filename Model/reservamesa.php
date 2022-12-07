@@ -153,6 +153,141 @@ class ReservaMesa{
 
     }
 
+    public static function getbyId(int $id, $dia, $hora)
+    {
+        require "../controller/conexion.php";
+
+        if ($hora=="-"){
+            $hora=date("h:i");
+        }
+        $idB = $pdo->quote($id);
+        $idS = str_replace('\'', '', $idB);
+        $diaB = $pdo->quote($dia);
+        $horaB = $pdo->quote($hora);
+        $horaS = str_replace('\'', '', $horaB);
+        $min = explode(":", $horaS);
+
+        $min[1] = $min[0] * 60 + $min[1];
+        $horaAtras = $min[1] - 60;
+
+        $horaAtras = $horaAtras / 60;
+        if (strpos($horaAtras, ".")) {
+            $horaAtras = explode(".", $horaAtras);
+            $horaAtras = $horaAtras[0] . "." . ($horaAtras[1] * 60);
+
+            $horaAtras = floor(($horaAtras * 100)) / 100;
+            $horaAtras = explode(".", $horaAtras);
+            $horaAtras = "'" . $horaAtras[0] . ":" . $horaAtras[1] . "'";
+        } else {
+            $horaAtras = "'" . $horaAtras . ":00" . "'";
+        }
+
+
+        $horaAdelante = $min[1] + 60;
+
+        $horaAdelante = $horaAdelante / 60;
+        if (strpos($horaAdelante, ".")) {
+            $horaAdelante = explode(".", $horaAdelante);
+            $horaAdelante = $horaAdelante[0] . "." . ($horaAdelante[1] * 60);
+
+            $horaAdelante = floor(($horaAdelante * 100)) / 100;
+            $horaAdelante = explode(".", $horaAdelante);
+            $horaAdelante = "'" . $horaAdelante[0] . ":" . $horaAdelante[1] . "'";
+
+        } else {
+            $horaAdelante = "'" . $horaAdelante . ":00" . "'";
+
+        };
+
+
+        try {
+            $stmt2 = $pdo->prepare("SELECT * FROM tbl_reserva_mesa rm INNER JOIN tbl_cliente c on c.Id_cli=rm.Id_cli WHERE rm.Id_mesa=$idS and rm.Dia_rm=$diaB and rm.Hora_ini_rm BETWEEN $horaAtras and $horaAdelante");
+            //$stmt2->bindparam(1, $idS);
+            $stmt2->execute();
+            return $stmt2;
+        }catch (Exception $e){
+            echo "<script>alert('Error al mostrar datos de las mesas de la sala '.$id)</script>";
+        }
+    }
+    public static function getbyId2(int $id, $dia, $hora)
+    {
+        require "../controller/conexion.php";
+
+        if ($hora=="-"){
+            $hora=date("h:i");
+        }
+        $idB = $pdo->quote($id);
+        $idS = str_replace('\'', '', $idB);
+        $diaB = $pdo->quote($dia);
+        $horaB = $pdo->quote($hora);
+        $horaS = str_replace('\'', '', $horaB);
+        $min = explode(":", $horaS);
+
+        $min[1] = $min[0] * 60 + $min[1];
+        $horaAtras = $min[1] - 60;
+
+        $horaAtras = $horaAtras / 60;
+        if (strpos($horaAtras, ".")) {
+            $horaAtras = explode(".", $horaAtras);
+            $horaAtras = $horaAtras[0] . "." . ($horaAtras[1] * 60);
+
+            $horaAtras = floor(($horaAtras * 100)) / 100;
+            $horaAtras = explode(".", $horaAtras);
+            $horaAtras = "'" . $horaAtras[0] . ":" . $horaAtras[1] . "'";
+        } else {
+            $horaAtras = "'" . $horaAtras . ":00" . "'";
+        }
+
+
+        $horaAdelante = $min[1] + 60;
+
+        $horaAdelante = $horaAdelante / 60;
+        if (strpos($horaAdelante, ".")) {
+            $horaAdelante = explode(".", $horaAdelante);
+            $horaAdelante = $horaAdelante[0] . "." . ($horaAdelante[1] * 60);
+
+            $horaAdelante = floor(($horaAdelante * 100)) / 100;
+            $horaAdelante = explode(".", $horaAdelante);
+            $horaAdelante = "'" . $horaAdelante[0] . ":" . $horaAdelante[1] . "'";
+
+        } else {
+            $horaAdelante = "'" . $horaAdelante . ":00" . "'";
+
+        };
+
+
+        try {
+            $stmt2 = $pdo->prepare("SELECT Dni_cli FROM `tbl_cliente` c INNER JOIN tbl_reserva_mesa rm on c.Id_cli=rm.Id_cli WHERE rm.Dia_rm=$diaB and rm.Hora_ini_rm BETWEEN $horaAtras and $horaAdelante");
+            //$stmt2->bindparam(1, $idS);
+            $stmt2->execute();
+            //$stmt2=$stmt2->fetch(PDO::FETCH_ASSOC);
+            return $stmt2;
+        }catch (Exception $e){
+            echo "<script>alert('Error al mostrar datos de las mesas de la sala '.$id)</script>";
+        }
+    }
+    public static function crear($id,$dniCam,$cli,$dia,$hora_ini,$ocu){
+        require "../Controller/conexion.php";
+        $idB = $pdo->quote($id);
+        $idS = str_replace('\'', '', $idB);
+        $cam= $pdo->prepare("SELECT `Id_cam` FROM `tbl_camarero` WHERE Dni_cam=?");
+        $cam->bindparam(1,$dniCam);
+        $cam->execute();
+        $cam=$cam->fetch(PDO::FETCH_ASSOC);
+        $cam=$cam['Id_cam'];
+        $cliB = $pdo->quote($cli['Id_cli']);
+        $cliS = str_replace('\'', '', $cliB);
+        $dia = $pdo->quote($dia);
+        $hora= $pdo->quote($hora_ini);
+        $ocu= $pdo->quote($ocu);
+
+        $stmt = $pdo->prepare("INSERT INTO `tbl_reserva_mesa`(`Id_reserva`, `Id_mesa`, `Id_cam`, `Id_cli`, `Dia_rm`, `Hora_ini_rm`, `Ocupacion_rm`) VALUES (null,$id,$cam,$cliS,$dia,$hora,$ocu)");
+        //$stmt->bindparam(1, $idS);
+        $stmt->execute();
+        return $stmt;
+
+    }
+
     public static function getFilter($camarero,$sala,$mesa,$dia,$horaInicial,$horaFinal){
         require "../controller/conexion.php";
         try {
@@ -253,6 +388,13 @@ class ReservaMesa{
             echo "<script>alert('Error al mostrar datos de las mesas')</script>";
         }
     }
+    public static function delete(int $id){
+        REQUIRE "../Controller/conexion.php";
+        $stmt=$pdo->prepare("DELETE FROM `tbl_reserva_mesa` WHERE Id_mesa=?");
+        $stmt -> bindparam( 1,$id);
+        $stmt->execute();
+
+    }
 
     // public function subirRegistroMesa(){
         
@@ -303,6 +445,7 @@ class ReservaMesa{
         return $stmt;
 
     }
+
     public function getUsosMesas(){
         require "../controller/conexion.php";
 

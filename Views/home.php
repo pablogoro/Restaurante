@@ -53,10 +53,11 @@
             </div>
         </form>
 
-        <div class="info-box">infooo</div>
+        <div class="info-box" id="info-box"></div>
     </div>
     <div class="rigth">
-        <div class="contenedor2 " id="contenedor2">
+        <div class="contenedor2 " id="contenedor">
+
             <?php
             require_once "../Controller/salacontroller.php";
             ?>

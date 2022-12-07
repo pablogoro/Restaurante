@@ -5,7 +5,7 @@
     <title>Title</title>
     <script src="https://kit.fontawesome.com/20fb0bfa14.js" crossorigin="anonymous"></script>
     <script src="./js/script.js"></script>
-    <link rel="stylesheet" href="./css/principal.css">
+        <link rel="stylesheet" href="./css/principal.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -53,7 +53,7 @@
             </div>
         </form>
 
-        <div class="info-box" id="info-box">infooo</div>
+        <div class="info-box" id="info-box"></div>
     </div>
     <div class="rigth">
         <div class="contenedor " id="contenedor">

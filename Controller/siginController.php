@@ -59,7 +59,7 @@ if(isset($_POST['button-login'])){
                     $_SESSION['telf']=$telf;
                     $_SESSION['email']=$email;
                     $_SESSION['rol']="admin";
-                    echo "<script>window.location.href = '../Views/principal.php'</script>";
+                    echo "<script>window.location.href = '../Views/cruds.php'</script>";
                 }
             }else{
                 session_start();
