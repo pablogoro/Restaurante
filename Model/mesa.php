@@ -267,7 +267,7 @@ public static function updateEstado (int $sala, int $id, string $est, int $ocu, 
 
 }
 
-public static function update(int $id,$cap,$estado,$sala){
+public static function update(int $id,$cap,$estado,$sala,$img){
 
     require "../Controller/conexion.php";
     $id=$pdo->quote($id);
@@ -278,12 +278,13 @@ public static function update(int $id,$cap,$estado,$sala){
     $cap=str_replace('\'','',$cap);
     $estado=str_replace('\'','',$estado);
     $sala=str_replace('\'','',$sala);
-    $sql="UPDATE `tbl_mesa` SET `capacidad_mesa`=?,`Estado`=?,`Sala`=? WHERE Id_mesa=?  ";
+    $sql="UPDATE `tbl_mesa` SET `capacidad_mesa`=?,`Estado`=?,`Sala`=?,`img`=? WHERE Id_mesa=?  ";
     $stmt=$pdo->prepare($sql);
     $stmt -> bindparam( 1,$cap);
     $stmt -> bindparam( 2,$estado);
     $stmt -> bindparam( 3,$sala);
-    $stmt -> bindparam( 4,$id);
+    $stmt -> bindparam( 4,$img);
+    $stmt -> bindparam( 5,$id);
     $stmt->execute();
     return $stmt;
 }

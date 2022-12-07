@@ -80,9 +80,18 @@ if ($_POST['user']=="cli"){
     }
 }else if ($_POST['user']=="mesas"){
     require_once "../Model/mesa.php";
+
     if (empty($_POST['id2']) or empty($_POST['cap']) or empty($_POST['estado']) or empty($_POST['sala'])){
         echo "camposVacios";
     }else{
+
+
+        $img=explode("fakepath",$_POST['img']);
+        $type=explode(".",$img[1]);
+        $formato=$type[1];
+        if ($formato != "jpeg" && $formato != "jpg" && $formato != "png"){
+            echo "formato";
+        }
         try {
 
             require_once "./conexion.php";
@@ -92,7 +101,7 @@ if ($_POST['user']=="cli"){
             foreach ($stmt as $id){
                 $sala=$id;
             }
-            Mesa::update($_POST['id2'],$_POST['cap'],$_POST['estado'],$sala['Id_sala']);
+            Mesa::update($_POST['id2'],$_POST['cap'],$_POST['estado'],$sala['Id_sala'],$img[1]);
             echo "OK";
         }catch (Exception $e){
             echo "falseCreate";

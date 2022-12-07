@@ -63,6 +63,7 @@
              <input type='text' name='dni' id='dni' placeholder='dni'>
              <input type='text' name='email' id='email' placeholder='email'>
              <input type='text' name='telf' id='telf' placeholder='telf'>
+
         </form>
         <input value="actualizar"  type='button' id='submit' onclick='editar()'>
 
@@ -72,7 +73,7 @@
 <div id="myModal3" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <form id="form-crear3">
+        <form id="form-crear3"  enctype="multipart/formdata">
             <input type='hidden' name='id' id='id2'>
             <select  name='estado' id='estado' placeholder='Estado'>   <option>ok</option> <option>mantenimiento</option>   </select>
             <input type='text' name='capacidad' id='capacidad' placeholder='capacidad'>
@@ -86,7 +87,7 @@
                 }
                 ?>
             </select>
-
+            <input type='file' name='img' id='img'>
         </form>
         <input  value="actualizar"  type='button' id='submit' onclick='editar()'>
     </div>

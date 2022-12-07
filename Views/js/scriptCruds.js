@@ -295,6 +295,7 @@ function editar(){
     const cap=document.getElementById('capacidad').value;
     const estado=document.getElementById('estado').value;
     const sala=document.getElementById('sala').value;
+    const img=document.getElementById('img').value;
 
     var formdata = new FormData();
     formdata.append('id', id);
@@ -308,6 +309,7 @@ function editar(){
     formdata.append('cap', cap);
     formdata.append('estado', estado);
     formdata.append('sala', sala);
+    formdata.append('img', img);
     var ajax = new XMLHttpRequest();
     ajax.open('POST', '../Controller/editar.php');
     ajax.onload = function() {
